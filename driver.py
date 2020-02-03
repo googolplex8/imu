@@ -32,6 +32,8 @@ def get_data():
     mag_y = get_decimal(0x13, 0x14)
     mag_z = get_decimal(0x15, 0x16)
 
+    return np.array([accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z])
+
 def moving_average(a, n=10):
     ret = np.cumsum(a, dtype=float)
     ret[n:] = ret[n:] - ret[:-n]
@@ -45,16 +47,16 @@ def main():
     
     while(True):
         
-        get_data()
+        data = get_data()
 
-        print("Accel: ", accel_x, ", ", accel_y, ", ", accel_z)
-        print("Gyro: ", gyro_x, ", ", gyro_y, ", ", gyro_z)
-        print("Mag: ", mag_x, ", ", mag_y, ", ", mag_z)
+        print("Accel: ", data[0], ", ", data[1], ", ", data())
+        print("Gyro: ", data[3], ", ", data[4], ", ", data())
+        print("Mag: ", data[6], ", ", data[7], ", ", data())
 
         
-        # gyr = np.array([gyro_x, gyro_y, gyro_z])
-        # acc = np.array([accel_x, accel_y, accel_z])
-        # mag = np.array([mag_x, mag_y, mag_z)])
+        # acc = np.array([data[0], data[1], data[2]])
+        # gyr = np.array([data[3], data[4], data[5]])
+        # mag = np.array([data[6], data[7], data[8])])
         # gyr_rad = gyr * (np.pi/180)
     
         # filter.update(gyr_rad,acc,mag)
