@@ -49,9 +49,10 @@ def main():
         
         data = get_data()
 
-        print("Accel: ", data[0], ", ", data[1], ", ", data())
-        print("Gyro: ", data[3], ", ", data[4], ", ", data())
-        print("Mag: ", data[6], ", ", data[7], ", ", data())
+        print("Accel: ", data[0], ",", data[1], ",", data[2])
+        print("Gyro: ", data[3], ",", data[4], ",", data[5])
+        print("Mag: ", data[6], ",", data[7], ",", data[8])
+        print()
 
         
         # acc = np.array([data[0], data[1], data[2]])
