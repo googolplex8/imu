@@ -15,7 +15,9 @@ def get_decimal(ls, ms):
     return np.int16((high | read_data(ls)))
 
 def read_data(num):
-    return bus.read_byte_data(I2C_IMU_ADDRESS, num)
+    a = bus.read_byte_data(I2C_IMU_ADDRESS, num)
+    # print(a)
+    return a
 
 def get_data():
     elapsed_time = t.process_time()
@@ -32,6 +34,8 @@ def get_data():
     mag_y = get_decimal(0x13, 0x14)
     mag_z = get_decimal(0x15, 0x16)
 
+    # print(accel_x)
+
     return np.array([accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z])
 
 def moving_average(a, n=10):
@@ -40,15 +44,21 @@ def moving_average(a, n=10):
     return ret[n - 1:] / n
 
 def main():
+    bus.write_byte_data(I2C_IMU_ADDRESS, 0x06, 0x01) # wake up imu from sleep, try until works
+    bus.write_byte_data(I2C_IMU_ADDRESS, 0x31, 0x02) # wake magnetometer from sleep, try until works
+
     time = np.array([])
     roll = np.array([])
     pitch = np.array([])
     yaw = np.array([])
     
     while(True):
-        
-        data = get_data()
-
+        try:
+            data = get_data()
+        except:
+            print("Connection Lost")
+            t.sleep(1)
+ 
         print("Accel: ", data[0], ",", data[1], ",", data[2])
         print("Gyro: ", data[3], ",", data[4], ",", data[5])
         print("Mag: ", data[6], ",", data[7], ",", data[8])
