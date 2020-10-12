@@ -50,21 +50,21 @@ def main():
             data = get_data()
         except:
             print("Connection Lost")
-            t.sleep(1)
+            t.sleep(10)
  
-        # print("Accel: ", data[0], ",", data[1], ",", data[2])
-        # print("Gyro: ", data[3], ",", data[4], ",", data[5])
-        # print("Mag: ", data[6], ",", data[7], ",", data[8])
-        # print()
+        print("Accel: ", data[0], ",", data[1], ",", data[2])
+        print("Gyro: ", data[3], ",", data[4], ",", data[5])
+        print("Mag: ", data[6], ",", data[7], ",", data[8])
+        print()
 
         acc = np.array([data[0], data[1], data[2]])
         gyr = np.array([data[3], data[4], data[5]])
         mag = np.array([data[6], data[7], data[8]])
         gyr_rad = gyr * (np.pi/180)
     
-        # filter.update(gyr_rad,acc,mag)
+        filter.update(gyr_rad,acc,mag)
         # aboves update method can be run instead of update_imu if the magnetometer problem is fixed 
-        filter.update_imu(gyr_rad,acc) #updates the filter and returns roll, pitch, and yaw in quaternion form
+        # filter.update_imu(gyr_rad,acc) #updates the filter and returns roll, pitch, and yaw in quaternion form
         ahrs = filter.quaternion.to_euler_angles()
 
         # values are between -pi and pi
@@ -72,7 +72,7 @@ def main():
         curPitch = ahrs[1]
         curYaw = ahrs[2]
         
-        print("Roll: ", curRoll, " Pitch: ", curPitch, " Yaw: ", curYaw)
+        # print("Roll: ", curRoll, " Pitch: ", curPitch, " Yaw: ", curYaw)
         print()
 
 if(__name__ == '__main__'):
