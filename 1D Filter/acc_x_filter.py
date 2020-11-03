@@ -1,4 +1,4 @@
-from rover_common import aiolcm
+""" from rover_common import aiolcm
 from rover_msgs import IMUData
 
 class LinearAccelFilter:
@@ -23,7 +23,7 @@ class LinearAccelFilter:
             cur_accel = (weight) * cur_accel + (1-weight) * prev_accel
             prev_accel = cur_accel
 
-        self.lcm.publish('/filtered_imu', self.cur_accel)
+        self.lcm.publish('/filtered_imu', self.cur_accel) """
 
 
 
