@@ -1,6 +1,6 @@
 import csv
 from collections import deque
-
+import math
 
 ###input params###########
 num_measurements = 10     #if rapid change in measurements, num_measurements must be lower
@@ -13,6 +13,13 @@ isFirstRow = True
 prev_accel = 0
 d = deque()
 average = 0
+g = 1
+
+def calculate_gravity(roll, pitch):
+    grav_x = g*math.sin(pitch)
+    grav_y = -1*g*math.cos(pitch)*math.sin(roll)
+    grav_z = -1*g*math.cos(pitch)*math.cos(roll)
+    return (grav_x, grav_y, grav_z)
 
 def find_average(input):
     sum = 0
@@ -48,6 +55,9 @@ with open('imu_out_filtered.csv', mode='w') as filter_file:
             else:
                 #print ("row[0] is " + row[0])
                 prev_accel = filter(prev_accel, float(row[2]))
+                prev_accel = prev_accel + (calculate_gravity(float(row[11]), float(row[10])))[2]
+                # pitch is index 10
+                # roll is index 11
                 writer = csv.writer(filter_file, delimiter=',', lineterminator = '\n')
                 #print("filtered accel is " + str(prev_accel))
                 writer.writerow([prev_accel])

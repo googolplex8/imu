@@ -53,6 +53,7 @@ with open(filt_path,'r') as csvfile:
 
 raw_time = range(0,raw_length)
 filtered_time = range(0,filtered_length)
+print('' + str(filtered_length)) # filtered length is not the right value when we plot the results of test_3d_filter
 
 fig1 = plt.figure() #Accel x
 plt.title('Accel x')
